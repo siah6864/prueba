@@ -1,0 +1,52 @@
+---
+title: "prueba"
+format: 
+    revealjs :
+          embed-resources : true
+editor: visual
+---
+
+## CARGA DE DATOS
+
+`datos de **acidentes de traficos** la ciudad de Madrid del año 2020`
+
+```{r}
+library(tidyverse)
+datos <- read_csv(file="./datos/accidentes.csv")
+datos
+```
+
+---
+
+## resumen de los datos
+
+```{r}
+resumen <- datos |> count(sexo)
+
+```
+
+---
+
+## visualizacion
+
+```{r}
+#| code-fold: true
+ggplot(resumen) +
+  geom_col(aes(x=sexo, y= n, fill= sexo), alpha=0.56) + 
+  ggthemes::scale_fill_colorblind() +
+  theme_minimal()
+```
+
+---
+
+## visualizacion interactiva
+
+```{r}
+#| code-fold: true
+library(plotly)
+gg <- ggplot(resumen) +
+  geom_col(aes(x=sexo, y= n, fill= sexo), alpha=0.56) + 
+  ggthemes::scale_fill_colorblind() +
+  theme_minimal()
+plotly::ggplotly(gg)
+```
